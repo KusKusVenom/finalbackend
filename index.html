@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Platform - Full Stack Project</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">📝 Blog Platform</div>
+            <div class="nav-menu" id="navMenu">
+                <a href="#" class="nav-link" onclick="showSection('home')">Home</a>
+                <a href="#" class="nav-link auth-only" onclick="showSection('my-posts')">My Posts</a>
+                <a href="#" class="nav-link auth-only" onclick="showSection('create-post')">Create Post</a>
+                <a href="#" class="nav-link guest-only" onclick="showSection('login')">Login</a>
+                <a href="#" class="nav-link guest-only" onclick="showSection('register')">Register</a>
+                <a href="#" class="nav-link auth-only" onclick="logout()">Logout</a>
+            </div>
+            <span class="user-info auth-only" id="userInfo"></span>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container main-container">
+        
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <h1>Welcome to Blog Platform</h1>
+            <p class="subtitle">Share your thoughts with the world</p>
+            <div id="postsContainer" class="posts-grid">
+                <div class="loading">Loading posts...</div>
+            </div>
+        </section>
+
+        <!-- Login Section -->
+        <section id="login" class="section">
+            <div class="auth-box">
+                <h2>Login</h2>
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <p class="form-footer">Don't have an account? <a href="#" onclick="showSection('register')">Register</a></p>
+                </form>
+            </div>
+        </section>
+
+        <!-- Register Section -->
+        <section id="register" class="section">
+            <div class="auth-box">
+                <h2>Register</h2>
+                <form id="registerForm" onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label for="registerUsername">Username</label>
+                        <input type="text" id="registerUsername" required minlength="3">
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Password</label>
+                        <input type="password" id="registerPassword" required minlength="6">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                    <p class="form-footer">Already have an account? <a href="#" onclick="showSection('login')">Login</a></p>
+                </form>
+            </div>
+        </section>
+
+        <!-- Create Post Section -->
+        <section id="create-post" class="section">
+            <div class="post-form-box">
+                <h2>Create New Post</h2>
+                <form id="createPostForm" onsubmit="handleCreatePost(event)">
+                    <div class="form-group">
+                        <label for="postTitle">Title</label>
+                        <input type="text" id="postTitle" required maxlength="200">
+                    </div>
+                    <div class="form-group">
+                        <label for="postContent">Content</label>
+                        <textarea id="postContent" rows="10" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Publish Post</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- My Posts Section -->
+        <section id="my-posts" class="section">
+            <h2>My Posts</h2>
+            <div id="myPostsContainer" class="posts-grid">
+                <div class="loading">Loading your posts...</div>
+            </div>
+        </section>
+
+        <!-- Single Post View -->
+        <section id="post-view" class="section">
+            <button class="btn btn-secondary" onclick="showSection('home')">← Back to Posts</button>
+            <div id="postDetail"></div>
+            <div class="comments-section">
+                <h3>Comments</h3>
+                <form id="commentForm" class="comment-form auth-only" onsubmit="handleCreateComment(event)">
+                    <textarea id="commentContent" placeholder="Add a comment..." rows="3" maxlength="500" required></textarea>
+                    <button type="submit" class="btn btn-primary">Post Comment</button>
+                </form>
+                <div id="commentsContainer"></div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
